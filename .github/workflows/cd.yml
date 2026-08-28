@@ -72,7 +72,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./
+        working-directory: ./frontend
 
     steps:
       - name: Checkout code
@@ -107,7 +107,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./
+        working-directory: ./admin-dashboard
 
     steps:
       - name: Checkout code
