@@ -72,7 +72,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./frontend
+        working-directory: ./
 
     steps:
       - name: Checkout code

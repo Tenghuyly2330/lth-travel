@@ -94,7 +94,7 @@ const Home = () => {
 
                                     <div className="lg:col-span-7 space-y-8">
                                           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] sm:text-sm font-semibold tracking-wide shadow-xs">
-                                                <span>The vacation you deserve is closer than you think</span>
+                                                <span>The vacation you deserve is closer than you think tesitng</span>
                                                 <Heart className="w-4 h-4 fill-orange-500" />
                                           </div>
 
