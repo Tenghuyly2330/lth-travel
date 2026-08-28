@@ -6,12 +6,12 @@ COPY package*.json ./
 
 RUN npm install
 
-RUN npx prisma generate
-
 COPY . .
+
+RUN npx prisma generate
 
 ENV NODE_ENV=production
 
 EXPOSE 5000
 
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
