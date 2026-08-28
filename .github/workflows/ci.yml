@@ -1,0 +1,100 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  # backend
+  backend:
+    name: Backend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./backend
+
+    steps:
+      # checkout
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # setup node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "backend/package-lock.json"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      # - name: Setup url database
+      #   run: echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> .env
+
+      # - name: Run Database Migration
+      #   run: npx prisma migrate deploy
+
+      # - name: Generate Prisma Client
+      #   run: npx prisma generate
+
+  # frontend
+  frontend:
+    name: Frontend CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./frontend
+    steps:
+      # checkout
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # setup node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "frontend/package-lock.json"
+
+      # install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # build
+      - name: Build
+        run: npm run build
+
+  # admin dashboard
+  admin-dashboard:
+    name: Admin Dashboard CI
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./admin-dashboard
+    steps:
+      # checkout
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # setup node
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+          cache-dependency-path: "admin-dashboard/package-lock.json"
+
+      # install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # build
+      - name: Build
+        run: npm run build
