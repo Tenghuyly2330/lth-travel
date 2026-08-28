@@ -107,7 +107,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./admin-dashboard
+        working-directory: ./
 
     steps:
       - name: Checkout code
