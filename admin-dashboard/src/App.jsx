@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { getMe, getTours, createTour, updateTour, deleteTour, getPhotos, createPhoto, updatePhoto, deletePhoto } from './api/api';
+import { getMe, getTrips, createTrip, updateTrip, deleteTrip, getPhotos, createPhoto, updatePhoto, deletePhoto } from './api/api';
 import Sidebar from './components/Sidebar';
 import Topbar from './components/Topbar';
 import Toast from './components/Toast';
-import TourModal from './components/modals/TourModal';
+import TripModal from './components/modals/TripModal';
 import PhotoModal from './components/modals/PhotoModal';
 import ConfirmDeleteModal from './components/modals/ConfirmDeleteModal';
 import LoginView from './pages/LoginView';
@@ -14,20 +14,20 @@ import GalleryPage from './pages/GalleryPage';
 
 function DashboardLayout({ user, onLogout }) {
   const location = useLocation();
-  const [tours, setTours] = useState([]);
+  const [trips, setTrips] = useState([]);
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [toast, setToast] = useState('');
+  const [toast, setToast] = useState({ message: '', type: 'success' });
 
-  // Tour Modal state
-  const [tourModalOpen, setTourModalOpen] = useState(false);
-  const [editingTour, setEditingTour] = useState(null);
-  const [tourForm, setTourForm] = useState({
-    title: '', location: '', country: '', duration: '', date: '', coverImage: '', description: ''
+  // Trip Modal state
+  const [tripModalOpen, setTripModalOpen] = useState(false);
+  const [editingTrip, setEditingTrip] = useState(null);
+  const [tripForm, setTripForm] = useState({
+    title: '', location: '', country: '', duration: '', members: '', date: '', coverImage: '', description: ''
   });
-  const [savingTour, setSavingTour] = useState(false);
-  const [deleteTourTarget, setDeleteTourTarget] = useState(null);
+  const [savingTrip, setSavingTrip] = useState(false);
+  const [deleteTripTarget, setDeleteTripTarget] = useState(null);
 
   // Photo Modal state
   const [photoModalOpen, setPhotoModalOpen] = useState(false);
@@ -38,19 +38,20 @@ function DashboardLayout({ user, onLogout }) {
   const [savingPhoto, setSavingPhoto] = useState(false);
   const [deletePhotoTarget, setDeletePhotoTarget] = useState(null);
 
-  const showToast = (msg) => {
-    setToast(msg);
-    setTimeout(() => setToast(''), 3000);
+  const showToast = (msg, type = 'success') => {
+    setToast({ message: msg, type });
+    setTimeout(() => setToast({ message: '', type: 'success' }), 4000);
   };
 
   const fetchData = useCallback(async () => {
     setLoading(true);
     try {
-      const [toursRes, photosRes] = await Promise.all([getTours(), getPhotos()]);
-      setTours(toursRes.data || []);
+      const [tripsRes, photosRes] = await Promise.all([getTrips(), getPhotos()]);
+      setTrips(tripsRes.data || []);
       setPhotos(photosRes.data || []);
     } catch (err) {
       console.error('Data fetch error', err);
+      showToast('Failed to load data. Please check your connection.', 'error');
     } finally {
       setLoading(false);
     }
@@ -58,56 +59,57 @@ function DashboardLayout({ user, onLogout }) {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  // Tour Handlers
-  const openCreateTour = () => {
-    setEditingTour(null);
-    setTourForm({ title: '', location: '', country: '', duration: '', date: '', coverImage: '', description: '' });
-    setTourModalOpen(true);
+  // Trip Handlers
+  const openCreateTrip = () => {
+    setEditingTrip(null);
+    setTripForm({ title: '', location: '', country: '', duration: '', members: '', date: '', coverImage: '', description: '' });
+    setTripModalOpen(true);
   };
 
-  const openEditTour = (tour) => {
-    setEditingTour(tour);
-    setTourForm({
-      title: tour.title || '',
-      location: tour.location || '',
-      country: tour.country || '',
-      duration: tour.duration || '',
-      date: tour.date || '',
-      coverImage: tour.coverImage || '',
-      description: tour.description || ''
+  const openEditTrip = (trip) => {
+    setEditingTrip(trip);
+    setTripForm({
+      title: trip.title || '',
+      location: trip.location || '',
+      country: trip.country || '',
+      duration: trip.duration || '',
+      members: trip.members || '',
+      date: trip.date || '',
+      coverImage: trip.coverImage || '',
+      description: trip.description || ''
     });
-    setTourModalOpen(true);
+    setTripModalOpen(true);
   };
 
-  const handleSaveTour = async (e) => {
+  const handleSaveTrip = async (e) => {
     e.preventDefault();
-    setSavingTour(true);
+    setSavingTrip(true);
     try {
-      if (editingTour) {
-        await updateTour(editingTour.id, tourForm);
-        showToast('Tour updated successfully!');
+      if (editingTrip) {
+        await updateTrip(editingTrip.id, tripForm);
+        showToast('Trip updated successfully!');
       } else {
-        await createTour(tourForm);
-        showToast('New tour created successfully!');
+        await createTrip(tripForm);
+        showToast('New trip created successfully!');
       }
-      setTourModalOpen(false);
+      setTripModalOpen(false);
       fetchData();
     } catch (err) {
-      alert('Error saving tour: ' + (err.response?.data?.message || err.message));
+      showToast('Error saving trip: ' + (err.response?.data?.message || err.message), 'error');
     } finally {
-      setSavingTour(false);
+      setSavingTrip(false);
     }
   };
 
-  const handleDeleteTour = async () => {
-    if (!deleteTourTarget) return;
+  const handleDeleteTrip = async () => {
+    if (!deleteTripTarget) return;
     try {
-      await deleteTour(deleteTourTarget.id);
-      showToast('Tour deleted successfully!');
-      setDeleteTourTarget(null);
+      await deleteTrip(deleteTripTarget.id);
+      showToast('Trip deleted successfully!');
+      setDeleteTripTarget(null);
       fetchData();
     } catch (err) {
-      alert('Failed to delete tour: ' + (err.response?.data?.message || err.message));
+      showToast('Failed to delete trip: ' + (err.response?.data?.message || err.message), 'error');
     }
   };
 
@@ -144,7 +146,7 @@ function DashboardLayout({ user, onLogout }) {
       setPhotoModalOpen(false);
       fetchData();
     } catch (err) {
-      alert('Error saving photo: ' + (err.response?.data?.message || err.message));
+      showToast('Error saving photo: ' + (err.response?.data?.message || err.message), 'error');
     } finally {
       setSavingPhoto(false);
     }
@@ -158,11 +160,11 @@ function DashboardLayout({ user, onLogout }) {
       setDeletePhotoTarget(null);
       fetchData();
     } catch (err) {
-      alert('Failed to delete photo: ' + (err.response?.data?.message || err.message));
+      showToast('Failed to delete photo: ' + (err.response?.data?.message || err.message), 'error');
     }
   };
 
-  const filteredTours = tours.filter(t =>
+  const filteredTrips = trips.filter(t =>
     t.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     t.country?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     t.location?.toLowerCase().includes(searchQuery.toLowerCase())
@@ -184,7 +186,7 @@ function DashboardLayout({ user, onLogout }) {
       <Sidebar
         user={user}
         onLogout={onLogout}
-        toursCount={tours.length}
+        tripsCount={trips.length}
         photosCount={photos.length}
       />
       <div className="md:ml-[220px] flex-1 flex flex-col min-h-screen">
@@ -194,18 +196,18 @@ function DashboardLayout({ user, onLogout }) {
           setSearchQuery={setSearchQuery}
         />
 
-        <Toast message={toast} />
+        <Toast message={toast.message} type={toast.type} />
 
         <Routes>
           <Route
             path="/"
             element={
               <DashboardHome
-                tours={tours}
+                trips={trips}
                 photos={photos}
                 loading={loading}
-                openCreateTour={openCreateTour}
-                openEditTour={openEditTour}
+                openCreateTrip={openCreateTrip}
+                openEditTrip={openEditTrip}
               />
             }
           />
@@ -213,11 +215,11 @@ function DashboardLayout({ user, onLogout }) {
             path="/dashboard"
             element={
               <DashboardHome
-                tours={tours}
+                trips={trips}
                 photos={photos}
                 loading={loading}
-                openCreateTour={openCreateTour}
-                openEditTour={openEditTour}
+                openCreateTrip={openCreateTrip}
+                openEditTrip={openEditTrip}
               />
             }
           />
@@ -225,11 +227,11 @@ function DashboardLayout({ user, onLogout }) {
             path="/packages"
             element={
               <PackagesPage
-                tours={filteredTours}
+                trips={filteredTrips}
                 loading={loading}
-                openCreateTour={openCreateTour}
-                openEditTour={openEditTour}
-                confirmDeleteTour={setDeleteTourTarget}
+                openCreateTrip={openCreateTrip}
+                openEditTrip={openEditTrip}
+                confirmDeleteTrip={setDeleteTripTarget}
               />
             }
           />
@@ -249,22 +251,22 @@ function DashboardLayout({ user, onLogout }) {
         </Routes>
       </div>
 
-      <TourModal
-        isOpen={tourModalOpen}
-        onClose={() => setTourModalOpen(false)}
-        onSubmit={handleSaveTour}
-        editingTour={editingTour}
-        tourForm={tourForm}
-        setTourForm={setTourForm}
-        saving={savingTour}
+      <TripModal
+        isOpen={tripModalOpen}
+        onClose={() => setTripModalOpen(false)}
+        onSubmit={handleSaveTrip}
+        editingTrip={editingTrip}
+        tripForm={tripForm}
+        setTripForm={setTripForm}
+        saving={savingTrip}
       />
 
       <ConfirmDeleteModal
-        isOpen={Boolean(deleteTourTarget)}
-        onClose={() => setDeleteTourTarget(null)}
-        onConfirm={handleDeleteTour}
-        title="Delete Tour Package"
-        itemName={deleteTourTarget?.title || ''}
+        isOpen={Boolean(deleteTripTarget)}
+        onClose={() => setDeleteTripTarget(null)}
+        onConfirm={handleDeleteTrip}
+        title="Delete Trip Package"
+        itemName={deleteTripTarget?.title || ''}
       />
 
       <PhotoModal

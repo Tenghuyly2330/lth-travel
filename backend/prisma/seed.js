@@ -6,7 +6,7 @@ async function main() {
       console.log('Seeding database with tours, photos, and admin user...');
 
       // Clean existing data
-      await prisma.tour.deleteMany({});
+      await prisma.trip.deleteMany({});
       await prisma.photo.deleteMany({});
       await prisma.user.deleteMany({});
 
@@ -22,13 +22,14 @@ async function main() {
       });
       console.log('Admin user seeded:', adminUser.email);
 
-      const tours = [
+      const trips = [
             {
                   title: 'Angkor Wat Ancient Temple Adventure',
                   slug: 'angkor-wat-adventure',
                   location: 'Siem Reap',
                   country: 'Cambodia',
                   duration: '3 Days / 2 Nights',
+                  members: 'Huy, Net, Piseth',
                   date: '2026-09-10',
                   coverImage: 'https://images.unsplash.com/photo-1569154941061-e231b4725ef1?auto=format&fit=crop&w=1200&q=80',
                   description: 'Explore the spectacular ancient temples of Angkor, witness sunrise over Angkor Wat towers, visit Ta Prohm jungle temple, and experience traditional Khmer cuisine.',
@@ -39,6 +40,7 @@ async function main() {
                   location: 'Phnom Penh',
                   country: 'Cambodia',
                   duration: '2 Days / 1 Night',
+                  members: 'Huy, Sovann, Dara',
                   date: '2026-09-18',
                   coverImage: 'https://images.unsplash.com/photo-1583417319070-4a69db38a482?auto=format&fit=crop&w=1200&q=80',
                   description: 'Discover the rich history of Cambodia with visits to the Royal Palace, Silver Pagoda, National Museum, and vibrant night markets along the Mekong riverfront.',
@@ -49,6 +51,7 @@ async function main() {
                   location: 'Sihanoukville',
                   country: 'Cambodia',
                   duration: '4 Days / 3 Nights',
+                  members: 'Net, Piseth, Vanna',
                   date: '2026-10-05',
                   coverImage: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80',
                   description: 'Relax on pristine white sand beaches, swim with bioluminescent plankton at night, island hop on traditional wooden boats, and enjoy fresh coastal seafood.',
@@ -59,6 +62,7 @@ async function main() {
                   location: 'Manali, Himachal Pradesh',
                   country: 'India',
                   duration: '10 Days / 9 Nights',
+                  members: 'Huy, Piseth, Rahul',
                   date: '2026-10-15',
                   coverImage: 'https://images.unsplash.com/photo-1626621341517-bbf3d9990a23?auto=format&fit=crop&w=1200&q=80',
                   description: 'Trek through pine forests, snow-capped Himalayan peaks, Solang Valley sports, and serene monasteries in northern India.',
@@ -69,6 +73,7 @@ async function main() {
                   location: 'Jaipur, Rajasthan',
                   country: 'India',
                   duration: '5 Days / 4 Nights',
+                  members: 'Net, Dara, Priya',
                   date: '2026-11-01',
                   coverImage: 'https://images.unsplash.com/photo-1477587458883-47145ed94245?auto=format&fit=crop&w=1200&q=80',
                   description: 'Immerse yourself in Rajasthan royal palaces, historic Amber Fort, pink city bazaars, and opulent Rajasthani dining.',
@@ -79,14 +84,15 @@ async function main() {
                   location: 'Kutch, Gujarat',
                   country: 'India',
                   duration: '4 Days / 3 Nights',
+                  members: 'Huy, Net, Piseth, Sovann',
                   date: '2026-11-12',
                   coverImage: 'https://images.unsplash.com/photo-1609828913642-a5586831c57c?auto=format&fit=crop&w=1200&q=80',
                   description: 'Experience the magic of the infinite white salt desert under the full moon, local artisan crafts, cultural dance, and luxury desert tent camping.',
             },
       ];
 
-      for (const tour of tours) {
-            await prisma.tour.create({ data: tour });
+      for (const trip of trips) {
+            await prisma.trip.create({ data: trip });
       }
 
       const photos = [

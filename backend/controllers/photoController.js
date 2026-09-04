@@ -5,7 +5,10 @@ const { deleteFromCloudinary } = require('../config/cloudinary');
 const getPhotos = async (req, res) => {
       try {
             const photos = await prisma.photo.findMany({
-                  orderBy: { createdAt: 'desc' },
+                  orderBy: [
+                        { date: { sort: 'desc', nulls: 'last' } },
+                        { createdAt: 'desc' },
+                  ],
             });
             res.json(photos);
       } catch (error) {

@@ -13,11 +13,22 @@ cloudinary.config({
  * @param {string} folder 
  * @returns {Promise<{url: string, public_id: string}>}
  */
-const uploadToCloudinary = (fileBuffer, folder = 'tours') => {
+const uploadToCloudinary = (fileBuffer, folder = 'lth-travel/trips') => {
+      let targetFolder = folder || 'lth-travel/trips';
+      if (!targetFolder.startsWith('lth-travel/')) {
+            if (targetFolder === 'trip' || targetFolder === 'trips') {
+                  targetFolder = 'lth-travel/trips';
+            } else if (targetFolder === 'photos' || targetFolder === 'gallery') {
+                  targetFolder = 'lth-travel/gallery';
+            } else {
+                  targetFolder = `lth-travel/${targetFolder}`;
+            }
+      }
+
       return new Promise((resolve, reject) => {
             const uploadStream = cloudinary.uploader.upload_stream(
                   {
-                        folder: folder,
+                        folder: targetFolder,
                         resource_type: 'auto',
                   },
                   (error, result) => {

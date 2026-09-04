@@ -8,8 +8,8 @@ const Navbar = () => {
 
       const navLinks = [
             { name: 'Home', path: '/' },
-            { name: 'Our Tours', path: '/tours' },
-            { name: 'Photos', path: '/photos' },
+            { name: 'Our Trips', path: '/trips' },
+            { name: 'Gallery', path: '/photos' },
       ];
 
       const isActive = (path) => {
@@ -37,8 +37,8 @@ const Navbar = () => {
                                           key={link.path}
                                           to={link.path}
                                           className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-200 ${isActive(link.path)
-                                                      ? 'bg-orange-500 text-white shadow-sm font-semibold'
-                                                      : 'text-slate-600 hover:text-slate-900 hover:bg-stone-100'
+                                                ? 'bg-orange-500 text-white shadow-sm font-semibold'
+                                                : 'text-slate-600 hover:text-slate-900 hover:bg-stone-100'
                                                 }`}
                                     >
                                           {link.name}
@@ -48,7 +48,7 @@ const Navbar = () => {
 
                         <div className="hidden md:flex items-center">
                               <Link
-                                    to="/tours"
+                                    to="/trips"
                                     className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-slate-900 hover:bg-orange-600 text-white text-sm font-medium transition-all duration-300 shadow-sm hover:shadow-md hover:gap-3"
                               >
                                     Let's Travel
@@ -73,15 +73,15 @@ const Navbar = () => {
                                           to={link.path}
                                           onClick={() => setIsOpen(false)}
                                           className={`block px-4 py-3 rounded-2xl text-base font-medium transition-colors ${isActive(link.path)
-                                                      ? 'bg-orange-50 text-orange-600 font-semibold'
-                                                      : 'text-slate-700 hover:bg-stone-50'
+                                                ? 'bg-orange-50 text-orange-600 font-semibold'
+                                                : 'text-slate-700 hover:bg-stone-50'
                                                 }`}
                                     >
                                           {link.name}
                                     </Link>
                               ))}
                               <Link
-                                    to="/tours"
+                                    to="/trips"
                                     onClick={() => setIsOpen(false)}
                                     className="block text-center w-full py-3 rounded-2xl bg-orange-500 text-white font-medium shadow-sm hover:bg-orange-600"
                               >

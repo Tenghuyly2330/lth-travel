@@ -25,29 +25,26 @@ const Footer = () => {
                                     </div>
                               </div>
 
-                              {/* Quick Links */}
-                              {/* <div className="space-y-3">
+                              <div className="space-y-3">
                                     <h4 className="text-white font-semibold text-sm tracking-wider uppercase font-serif-heading">Quick Links</h4>
                                     <ul className="space-y-2.5 text-sm">
                                           <li>
                                                 <Link to="/" className="hover:text-orange-400 transition-colors">Home</Link>
                                           </li>
                                           <li>
-                                                <Link to="/tours" className="hover:text-orange-400 transition-colors">Our Tours</Link>
+                                                <Link to="/trips" className="hover:text-orange-400 transition-colors">Our Trips</Link>
                                           </li>
                                           <li>
                                                 <Link to="/photos" className="hover:text-orange-400 transition-colors">Photo Gallery</Link>
                                           </li>
                                     </ul>
-                              </div> */}
+                              </div>
 
                               <div className="space-y-3">
                                     <h4 className="text-white font-semibold text-sm tracking-widest font-serif-heading">Top Destinations</h4>
                                     <ul className="space-y-2.5 text-sm text-slate-400">
                                           <li>Koh Kong, Cambodia</li>
-                                          {/* <li>Phnom Penh Heritage</li>
-                                          <li>Koh Rong Tropical Islands</li>
-                                          <li>Himalayan Alpine Treks</li> */}
+
                                     </ul>
                               </div>
 

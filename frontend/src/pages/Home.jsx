@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { getTours, getPhotos } from '../services/api';
-import TourCard from '../components/TourCard';
+import { getTrips, getPhotos } from '../services/api';
+import TripCard from '../components/TripCard';
 import PhotoGrid from '../components/PhotoGrid';
 import Lightbox from '../components/Lightbox';
 import Loading from '../components/Loading';
@@ -27,7 +27,7 @@ import {
 } from 'lucide-react';
 
 const Home = () => {
-      const [tours, setTours] = useState([]);
+      const [trips, setTrips] = useState([]);
       const [photos, setPhotos] = useState([]);
       const [loading, setLoading] = useState(true);
       const [error, setError] = useState(null);
@@ -45,8 +45,8 @@ const Home = () => {
             try {
                   setLoading(true);
                   setError(null);
-                  const [toursData, photosData] = await Promise.all([getTours(), getPhotos()]);
-                  setTours(toursData);
+                  const [tripsData, photosData] = await Promise.all([getTrips(), getPhotos()]);
+                  setTrips(tripsData);
                   setPhotos(photosData);
             } catch (err) {
                   console.error('Failed to load home page data:', err);
@@ -77,9 +77,9 @@ const Home = () => {
             setSelectedPhoto(photos[prevIdx]);
       };
 
-      const featuredTours = tours.slice(0, 3);
+      const featuredTrips = trips.slice(0, 3);
       const previewPhotos = photos.slice(0, 6);
-      const latestTour = tours.length > 0 ? tours[0] : null;
+      const latestTrip = trips.length > 0 ? trips[0] : null;
 
       return (
             <div className="space-y-24 pb-20">
@@ -94,7 +94,7 @@ const Home = () => {
 
                                     <div className="lg:col-span-7 space-y-8">
                                           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] sm:text-sm font-semibold tracking-wide shadow-xs">
-                                                <span>The vacation you deserve is closer than you think tesitng</span>
+                                                <span>The vacation you deserve is closer than you think</span>
                                                 <Heart className="w-4 h-4 fill-orange-500" />
                                           </div>
 
@@ -105,10 +105,10 @@ const Home = () => {
                                           </h1>
 
                                           <p className="text-slate-600 text-lg sm:text-xl max-w-xl font-normal leading-relaxed">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque, ducimus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur, obcaecati.
+                                                Discover unforgettable adventures and unique trip packages crafted just for you.
                                           </p>
 
-                                          {latestTour ? (
+                                          {latestTrip ? (
                                                 <div className="bg-white p-3.5 sm:p-4 rounded-3xl sm:rounded-full border border-orange-200/90 shadow-lg flex flex-col sm:flex-row items-center gap-3 sm:gap-4 max-w-2xl transition-all hover:border-orange-300">
                                                       <div className="flex-1 w-full flex items-center gap-3.5 px-3 py-1 border-b sm:border-b-0 sm:border-r border-stone-100 overflow-hidden">
                                                             <div className="w-10 h-10 rounded-2xl bg-orange-100 text-orange-600 flex items-center justify-center font-bold shrink-0">
@@ -117,15 +117,15 @@ const Home = () => {
                                                             <div className="text-left truncate">
                                                                   <div className="flex items-center gap-2">
                                                                         <span className="text-[10px] font-extrabold uppercase tracking-wider text-orange-600 bg-orange-50 px-2 py-0.5 rounded-full border border-orange-100">
-                                                                              Latest Tour
+                                                                              Latest Trip
                                                                         </span>
                                                                         <span className="text-xs text-slate-500 flex items-center gap-1 truncate">
                                                                               <MapPin className="w-3 h-3 text-orange-500 shrink-0" />
-                                                                              {latestTour.location}, {latestTour.country}
+                                                                              {latestTrip.location}, {latestTrip.country}
                                                                         </span>
                                                                   </div>
                                                                   <h4 className="text-sm font-bold text-slate-900 truncate mt-0.5">
-                                                                        {latestTour.title}
+                                                                        {latestTrip.title}
                                                                   </h4>
                                                             </div>
                                                       </div>
@@ -135,13 +135,13 @@ const Home = () => {
                                                             <div className="text-left">
                                                                   <label className="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Date / Duration</label>
                                                                   <span className="text-xs font-semibold text-slate-800">
-                                                                        {latestTour.date || latestTour.duration}
+                                                                        {latestTrip.date || latestTrip.duration}
                                                                   </span>
                                                             </div>
                                                       </div>
 
                                                       <Link
-                                                            to={`/tours/${latestTour.slug || latestTour.id}`}
+                                                            to={`/trips/${latestTrip.id}`}
                                                             className="w-full sm:w-auto px-6 py-3 rounded-full bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md hover:shadow-lg transition-all shrink-0"
                                                       >
                                                             <span>View Latest</span>
@@ -150,17 +150,17 @@ const Home = () => {
                                                 </div>
                                           ) : (
                                                 <div className="bg-white p-4 rounded-3xl sm:rounded-full border border-stone-200 shadow-xs flex items-center justify-between gap-4 max-w-2xl text-xs text-slate-400">
-                                                      <span>Loading latest tour experience...</span>
-                                                      <Link to="/tours" className="text-orange-600 font-semibold hover:underline">Explore All Tours</Link>
+                                                      <span>Loading latest trip experience...</span>
+                                                      <Link to="/trips" className="text-orange-600 font-semibold hover:underline">Explore All Trips</Link>
                                                 </div>
                                           )}
 
                                           <div className="flex items-center gap-4 pt-2">
                                                 <Link
-                                                      to="/tours"
+                                                      to="/trips"
                                                       className="px-6 py-3 rounded-full bg-slate-900 text-white text-sm font-semibold hover:bg-orange-600 transition-colors shadow-sm"
                                                 >
-                                                      Explore Our Tours
+                                                      Explore Our Trips
                                                 </Link>
                                                 <Link
                                                       to="/photos"
@@ -316,32 +316,32 @@ const Home = () => {
                         </div>
                   </section>
 
-                  {/* Featured Tours Section */}
+                  {/* Featured Trips Section */}
                   <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
                         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                               <div className="space-y-3 max-w-xl">
                                     <span className="flex items-end gap-2 text-orange-500 text-xs font-extrabold uppercase tracking-widest">Top Destinations <Motorbike className="text-amber-600 w-4 h-4 inline-block hover:rotate-12 transition-transform" /></span>
                                     <h2 className="font-serif-heading text-4xl sm:text-5xl font-bold text-slate-900">
-                                          Discover Featured Tours
+                                          Discover Featured Trips
                                     </h2>
                               </div>
                               <Link
-                                    to="/tours"
+                                    to="/trips"
                                     className="inline-flex items-center gap-2 font-semibold text-orange-600 hover:text-orange-700 transition-colors text-sm"
                               >
-                                    <span>Explore All Tours</span>
+                                    <span>Explore All Trips</span>
                                     <ArrowRight className="w-4 h-4" />
                               </Link>
                         </div>
 
                         {loading ? (
-                              <Loading message="Loading featured tours..." />
+                              <Loading message="Loading featured trips..." />
                         ) : error ? (
                               <ErrorMessage message={error} onRetry={fetchData} />
                         ) : (
                               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {featuredTours.map((tour) => (
-                                          <TourCard key={tour.id} tour={tour} />
+                                    {featuredTrips.map((trip) => (
+                                          <TripCard key={trip.id} trip={trip} />
                                     ))}
                               </div>
                         )}

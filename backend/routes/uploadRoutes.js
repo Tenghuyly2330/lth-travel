@@ -25,7 +25,7 @@ router.post('/', upload.single('image'), async (req, res) => {
                   return res.status(400).json({ message: 'No image file provided' });
             }
 
-            const folder = req.body.folder || 'tours'; // 'tours' or 'photos'
+            const folder = req.body.folder || 'lth-travel/trips'; // 'lth-travel/trips' or 'lth-travel/gallery'
             const result = await uploadToCloudinary(req.file.buffer, folder);
 
             res.status(200).json({

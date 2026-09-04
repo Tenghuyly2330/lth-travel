@@ -1,8 +1,12 @@
 import React from 'react';
-import { Plus, Clock, Calendar, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Clock, Calendar, Users, Pencil, Trash2 } from 'lucide-react';
 import Loading from '../components/Loading';
 
-export default function PackagesPage({ tours, loading, openCreateTour, openEditTour, confirmDeleteTour }) {
+export default function PackagesPage({ trips = [], loading, openCreateTrip, openEditTrip, confirmDeleteTrip }) {
+      const handleCreate = openCreateTrip;
+      const handleEdit = openEditTrip;
+      const handleDelete = confirmDeleteTrip;
+
       if (loading) {
             return (
                   <div className="p-6">
@@ -16,41 +20,41 @@ export default function PackagesPage({ tours, loading, openCreateTour, openEditT
                   <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm space-y-6">
                         <div className="flex items-center justify-between">
                               <div>
-                                    <h2 className="text-lg font-bold text-slate-900">Travel Packages</h2>
-                                    <p className="text-xs text-slate-500">Create, update, and manage all tour packages</p>
+                                    <h2 className="text-lg font-bold text-slate-900">Travel Trip Packages</h2>
+                                    <p className="text-xs text-slate-500">Create, update, and manage all trip packages</p>
                               </div>
                               <button
-                                    onClick={openCreateTour}
+                                    onClick={handleCreate}
                                     className="inline-flex items-center gap-2 bg-gradient-to-tr from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 transition-all duration-300 text-white px-4 py-2.5 rounded-2xl text-sm font-semibold transition-all shadow-md hover:shadow-lg"
                               >
                                     <Plus size={16} />
-                                    <span>Add New Tour</span>
+                                    <span>Add New Trip</span>
                               </button>
                         </div>
 
-                        {tours.length === 0 ? (
-                              <div className="text-center py-12 text-slate-400">No tours found.</div>
+                        {trips.length === 0 ? (
+                              <div className="text-center py-12 text-slate-400">No trips found.</div>
                         ) : (
                               <div className="overflow-x-auto">
                                     <table className="w-full text-left border-collapse">
                                           <thead>
                                                 <tr className="border-b border-slate-100 text-slate-400 text-xs uppercase tracking-wider font-semibold">
-                                                      <th className="py-3 px-4">Tour</th>
+                                                      <th className="py-3 px-4">Trip</th>
                                                       <th className="py-3 px-4">Location</th>
                                                       <th className="py-3 px-4">Duration</th>
+                                                      <th className="py-3 px-4">Members</th>
                                                       <th className="py-3 px-4">Date</th>
                                                       <th className="py-3 px-4 text-right">Actions</th>
                                                 </tr>
                                           </thead>
                                           <tbody className="divide-y divide-slate-100 text-sm">
-                                                {tours.map(t => (
+                                                {trips.map(t => (
                                                       <tr key={t.id} className="hover:bg-slate-50/80 transition-colors">
                                                             <td className="py-3 px-4">
                                                                   <div className="flex items-center gap-3">
                                                                         <img src={t.coverImage} alt={t.title} className="w-12 h-10 rounded-xl object-cover border border-slate-200" />
                                                                         <div>
                                                                               <div className="font-semibold text-slate-800 line-clamp-1">{t.title}</div>
-                                                                              <div className="text-xs text-slate-400">{t.slug}</div>
                                                                         </div>
                                                                   </div>
                                                             </td>
@@ -65,6 +69,14 @@ export default function PackagesPage({ tours, loading, openCreateTour, openEditT
                                                                   </span>
                                                             </td>
                                                             <td className="py-3 px-4 text-slate-600 font-medium">
+                                                                  {t.members ? (
+                                                                        <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200/60 px-2.5 py-1 rounded-full text-xs">
+                                                                              <Users size={11} className="text-emerald-500" />
+                                                                              {t.members}
+                                                                        </span>
+                                                                  ) : <span className="text-slate-300">-</span>}
+                                                            </td>
+                                                            <td className="py-3 px-4 text-slate-600 font-medium">
                                                                   {t.date ? (
                                                                         <span className="inline-flex items-center gap-1 bg-blue-50 text-blue-600 px-2.5 py-1 rounded-full text-xs">
                                                                               <Calendar size={11} />
@@ -75,16 +87,16 @@ export default function PackagesPage({ tours, loading, openCreateTour, openEditT
                                                             <td className="py-3 px-4 text-right">
                                                                   <div className="inline-flex items-center gap-2">
                                                                         <button
-                                                                              onClick={() => openEditTour(t)}
+                                                                              onClick={() => handleEdit(t)}
                                                                               className="p-2 rounded-xl text-slate-500 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                                                                              title="Edit Tour"
+                                                                              title="Edit Trip"
                                                                         >
                                                                               <Pencil size={15} />
                                                                         </button>
                                                                         <button
-                                                                              onClick={() => confirmDeleteTour(t)}
+                                                                              onClick={() => handleDelete(t)}
                                                                               className="p-2 rounded-xl text-slate-500 hover:text-red-600 hover:bg-red-50 transition-colors"
-                                                                              title="Delete Tour"
+                                                                              title="Delete Trip"
                                                                         >
                                                                               <Trash2 size={15} />
                                                                         </button>

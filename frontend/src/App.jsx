@@ -2,8 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
-import Tours from './pages/Tours';
-import TourDetails from './pages/TourDetails';
+import Trips from './pages/Trips';
+import TripDetails from './pages/TripDetails';
 import Photos from './pages/Photos';
 
 function App() {
@@ -15,8 +15,8 @@ function App() {
           <main>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/tours" element={<Tours />} />
-              <Route path="/tours/:id" element={<TourDetails />} />
+              <Route path="/trips" element={<Trips />} />
+              <Route path="/trips/:id" element={<TripDetails />} />
               <Route path="/photos" element={<Photos />} />
             </Routes>
           </main>

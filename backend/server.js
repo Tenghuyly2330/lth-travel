@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 require('dotenv').config();
 
-const tourRoutes = require('./routes/tourRoutes');
+const tripRoutes = require('./routes/tripRoutes');
 const photoRoutes = require('./routes/photoRoutes');
 const authRoutes = require('./routes/authRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
-app.use('/api/tours', tourRoutes);
+app.use('/api/trips', tripRoutes);
 app.use('/api/photos', photoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
@@ -31,6 +31,6 @@ app.use((err, req, res, next) => {
       res.status(500).json({ message: 'Internal Server Error', error: err.message });
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
       console.log(`🚀 Travel API Server running on port ${PORT}`);
 });

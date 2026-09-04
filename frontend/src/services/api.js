@@ -9,19 +9,49 @@ const api = axios.create({
       },
 });
 
-export const getTours = async () => {
-      const response = await api.get('/tours');
-      return response.data;
+export const getTrips = async () => {
+      try {
+            const response = await api.get('/trips');
+            return response.data;
+      } catch (err) {
+            console.warn('Primary API URL failed, attempting fallback to relative /api/trips...', err);
+            try {
+                  const fallbackRes = await axios.get('/api/trips');
+                  return fallbackRes.data;
+            } catch (fallbackErr) {
+                  throw err;
+            }
+      }
 };
 
-export const getTourById = async (idOrSlug) => {
-      const response = await api.get(`/tours/${idOrSlug}`);
-      return response.data;
+export const getTripById = async (idOrSlug) => {
+      try {
+            const response = await api.get(`/trips/${idOrSlug}`);
+            return response.data;
+      } catch (err) {
+            console.warn(`Primary API URL failed for trip ${idOrSlug}, attempting fallback...`, err);
+            try {
+                  const fallbackRes = await axios.get(`/api/trips/${idOrSlug}`);
+                  return fallbackRes.data;
+            } catch (fallbackErr) {
+                  throw err;
+            }
+      }
 };
 
 export const getPhotos = async () => {
-      const response = await api.get('/photos');
-      return response.data;
+      try {
+            const response = await api.get('/photos');
+            return response.data;
+      } catch (err) {
+            console.warn('Primary API URL failed for photos, attempting fallback...', err);
+            try {
+                  const fallbackRes = await axios.get('/api/photos');
+                  return fallbackRes.data;
+            } catch (fallbackErr) {
+                  throw err;
+            }
+      }
 };
 
 export default api;

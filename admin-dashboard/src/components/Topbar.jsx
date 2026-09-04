@@ -9,7 +9,7 @@ export default function Topbar({ title, searchQuery, setSearchQuery }) {
                         <Search size={14} className="text-slate-400 shrink-0" />
                         <input
                               className="bg-transparent border-none outline-none text-xs text-slate-800 placeholder:text-slate-400 w-full"
-                              placeholder="Search tours or photos..."
+                              placeholder="Search trips or photos..."
                               value={searchQuery}
                               onChange={e => setSearchQuery(e.target.value)}
                         />

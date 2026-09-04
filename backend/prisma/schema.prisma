@@ -7,7 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Tour {
+model Trip {
   id          String   @id @default(cuid())
   title       String
   slug        String   @unique
@@ -15,6 +15,7 @@ model Tour {
   country     String
   description String
   duration    String
+  members     String?
   date        String?
   coverImage  String
   createdAt   DateTime @default(now())

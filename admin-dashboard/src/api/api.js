@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE = import.meta.env.VITE_API_URL || '/api';
 
 export const api = axios.create({
       baseURL: API_BASE,
@@ -13,11 +13,11 @@ export const loginAdmin = (email, password) =>
 export const getMe = (token) =>
       api.get('/auth/me', { headers: { Authorization: `Bearer ${token}` } });
 
-// Tours API
-export const getTours = () => api.get('/tours');
-export const createTour = (data) => api.post('/tours', data);
-export const updateTour = (id, data) => api.put(`/tours/${id}`, data);
-export const deleteTour = (id) => api.delete(`/tours/${id}`);
+// Trips API
+export const getTrips = () => api.get('/trips');
+export const createTrip = (data) => api.post('/trips', data);
+export const updateTrip = (id, data) => api.put(`/trips/${id}`, data);
+export const deleteTrip = (id) => api.delete(`/trips/${id}`);
 
 // Photos API
 export const getPhotos = () => api.get('/photos');
@@ -26,7 +26,7 @@ export const updatePhoto = (id, data) => api.put(`/photos/${id}`, data);
 export const deletePhoto = (id) => api.delete(`/photos/${id}`);
 
 // Image Upload API (Cloudinary)
-export const uploadImage = (file, folder = 'tours') => {
+export const uploadImage = (file, folder = 'lth-travel/trips') => {
       const formData = new FormData();
       formData.append('image', file);
       formData.append('folder', folder);

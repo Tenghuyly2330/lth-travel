@@ -61,7 +61,7 @@ const Photos = () => {
                   <div className="text-center max-w-2xl mx-auto space-y-4">
                         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-50 text-orange-600 text-xs font-semibold uppercase tracking-wider border border-orange-200">
                               <Camera className="w-4 h-4" />
-                              <span>Travel Portfolio</span>
+                              <span>Photo Collection</span>
                         </div>
                         <h1 className="font-serif-heading text-4xl sm:text-5xl font-extrabold text-slate-900">
                               Photo Gallery

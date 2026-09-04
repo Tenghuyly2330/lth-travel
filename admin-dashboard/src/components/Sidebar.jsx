@@ -3,11 +3,13 @@ import { LayoutDashboard, Package, Camera, LogOut, Compass } from 'lucide-react'
 
 const NAV = [
       { path: '/', icon: LayoutDashboard, label: 'Dashboard' },
-      { path: '/packages', icon: Package, label: 'Packages' },
+      { path: '/packages', icon: Package, label: 'Trips' },
       { path: '/gallery', icon: Camera, label: 'Gallery' },
 ];
 
-export default function Sidebar({ user, onLogout, toursCount, photosCount }) {
+export default function Sidebar({ user, onLogout, tripsCount, photosCount }) {
+      const count = tripsCount || 0;
+
       return (
             <aside className="w-[220px] bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 left-0 h-screen py-4 z-40 transform -translate-x-full md:translate-x-0 transition-transform duration-300 ease-in-out">
                   <Link to="/" className="flex items-center gap-2.5 group ml-4">
@@ -35,10 +37,10 @@ export default function Sidebar({ user, onLogout, toursCount, photosCount }) {
                                           <>
                                                 <Icon size={17} className="shrink-0" />
                                                 <span>{label}</span>
-                                                {path === '/packages' && toursCount > 0 && (
+                                                {path === '/packages' && count > 0 && (
                                                       <span className={`ml-auto text-[8px] font-bold rounded-full px-2 py-1 min-w-[20px] text-center ${isActive ? 'bg-white/30 text-white' : 'bg-orange-600 text-white'
                                                             }`}>
-                                                            {toursCount}
+                                                            {count}
                                                       </span>
                                                 )}
                                                 {path === '/gallery' && photosCount > 0 && (

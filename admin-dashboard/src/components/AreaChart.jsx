@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-export default function AreaChart({ tours = [], photos = [] }) {
+export default function AreaChart({ trips = [], photos = [] }) {
       const [hoveredIdx, setHoveredIdx] = useState(null);
 
       const daysCount = 7;
@@ -11,29 +11,29 @@ export default function AreaChart({ tours = [], photos = [] }) {
       const iH = H - pad.t - pad.b;
 
       const pointsData = Array.from({ length: daysCount }).map((_, i) => {
-            const tourItem = tours[i % tours.length] || { title: `Tour #${i + 1}`, date: `2026-08-${15 + i}` };
+            const tripItem = trips[i % trips.length] || { title: `Trip #${i + 1}`, date: `2026-08-${15 + i}` };
             const photoItem = photos[i % photos.length] || { title: `Photo #${i + 1}`, date: `2026-08-${16 + i}` };
-            const tourVal = Math.max(1, (i * 3 + 2) % 9);
+            const tripVal = Math.max(1, (i * 3 + 2) % 9);
             const photoVal = Math.max(2, (i * 4 + 3) % 12);
             return {
                   day: DAYS[i],
-                  tourVal,
+                  tripVal,
                   photoVal,
-                  tourTitle: tourItem.title || 'Tour',
-                  tourDate: tourItem.date || 'N/A',
+                  tripTitle: tripItem.title || 'Trip',
+                  tripDate: tripItem.date || 'N/A',
                   photoTitle: photoItem.title || 'Photo',
                   photoDate: photoItem.date || 'N/A',
             };
       });
 
-      const allVals = pointsData.flatMap(p => [p.tourVal, p.photoVal]);
+      const allVals = pointsData.flatMap(p => [p.tripVal, p.photoVal]);
       const max = Math.max(...allVals) || 10;
       const min = 0;
       const range = max - min || 1;
 
-      const toursPts = pointsData.map((p, i) => [
+      const tripsPts = pointsData.map((p, i) => [
             pad.l + (i / (daysCount - 1)) * iW,
-            pad.t + iH - ((p.tourVal - min) / range) * iH,
+            pad.t + iH - ((p.tripVal - min) / range) * iH,
       ]);
 
       const photosPts = pointsData.map((p, i) => [
@@ -41,8 +41,8 @@ export default function AreaChart({ tours = [], photos = [] }) {
             pad.t + iH - ((p.photoVal - min) / range) * iH,
       ]);
 
-      const lineD1 = toursPts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
-      const areaD1 = lineD1 + ` L${toursPts[toursPts.length - 1][0]},${(pad.t + iH).toFixed(1)} L${toursPts[0][0]},${(pad.t + iH).toFixed(1)} Z`;
+      const lineD1 = tripsPts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
+      const areaD1 = lineD1 + ` L${tripsPts[tripsPts.length - 1][0]},${(pad.t + iH).toFixed(1)} L${tripsPts[0][0]},${(pad.t + iH).toFixed(1)} Z`;
 
       const lineD2 = photosPts.map((p, i) => `${i === 0 ? 'M' : 'L'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(' ');
       const areaD2 = lineD2 + ` L${photosPts[photosPts.length - 1][0]},${(pad.t + iH).toFixed(1)} L${photosPts[0][0]},${(pad.t + iH).toFixed(1)} Z`;
@@ -53,7 +53,7 @@ export default function AreaChart({ tours = [], photos = [] }) {
             const normX = (x / rect.width) * W;
             let closestIdx = 0;
             let minDiff = Infinity;
-            toursPts.forEach((p, idx) => {
+            tripsPts.forEach((p, idx) => {
                   const diff = Math.abs(p[0] - normX);
                   if (diff < minDiff) {
                         minDiff = diff;
@@ -64,8 +64,7 @@ export default function AreaChart({ tours = [], photos = [] }) {
       };
 
       const hoveredData = hoveredIdx !== null ? pointsData[hoveredIdx] : null;
-      const hoveredTourPt = hoveredIdx !== null ? toursPts[hoveredIdx] : null;
-      const hoveredPhotoPt = hoveredIdx !== null ? photosPts[hoveredIdx] : null;
+      const hoveredTripPt = hoveredIdx !== null ? tripsPts[hoveredIdx] : null;
 
       return (
             <div className="relative w-full h-full">
@@ -76,7 +75,7 @@ export default function AreaChart({ tours = [], photos = [] }) {
                         onMouseLeave={() => setHoveredIdx(null)}
                   >
                         <defs>
-                              <linearGradient id="toursGrad" x1="0" y1="0" x2="0" y2="1">
+                              <linearGradient id="tripsGrad" x1="0" y1="0" x2="0" y2="1">
                                     <stop offset="0%" stopColor="#3b82f6" stopOpacity="0.25" />
                                     <stop offset="100%" stopColor="#3b82f6" stopOpacity="0" />
                               </linearGradient>
@@ -107,9 +106,9 @@ export default function AreaChart({ tours = [], photos = [] }) {
                               />
                         ))}
 
-                        <path d={areaD1} fill="url(#toursGrad)" />
+                        <path d={areaD1} fill="url(#tripsGrad)" />
                         <path d={lineD1} fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-                        {toursPts.map((p, i) => (
+                        {tripsPts.map((p, i) => (
                               <circle
                                     key={`t-${i}`}
                                     cx={p[0]}
@@ -124,9 +123,9 @@ export default function AreaChart({ tours = [], photos = [] }) {
 
                         {hoveredIdx !== null && (
                               <line
-                                    x1={toursPts[hoveredIdx][0]}
+                                    x1={tripsPts[hoveredIdx][0]}
                                     y1={pad.t}
-                                    x2={toursPts[hoveredIdx][0]}
+                                    x2={tripsPts[hoveredIdx][0]}
                                     y2={pad.t + iH}
                                     stroke="#cbd5e1"
                                     strokeWidth="1.5"
@@ -134,7 +133,7 @@ export default function AreaChart({ tours = [], photos = [] }) {
                               />
                         )}
 
-                        {toursPts.map((p, i) => (
+                        {tripsPts.map((p, i) => (
                               <text
                                     key={`lbl-${i}`}
                                     x={p[0]}
@@ -153,7 +152,7 @@ export default function AreaChart({ tours = [], photos = [] }) {
                         <div
                               className="absolute z-30 pointer-events-none bg-slate-900/95 text-white p-3 rounded-2xl shadow-xl text-xs space-y-1.5 border border-slate-700/80 backdrop-blur-md animate-in fade-in zoom-in-95 duration-150"
                               style={{
-                                    left: `${Math.min(80, Math.max(10, (hoveredTourPt[0] / W) * 100))}%`,
+                                    left: `${Math.min(80, Math.max(10, (hoveredTripPt[0] / W) * 100))}%`,
                                     top: '0px',
                                     transform: 'translate(-50%, -100%)',
                                     minWidth: '220px'
@@ -167,8 +166,8 @@ export default function AreaChart({ tours = [], photos = [] }) {
                                     <div className="flex items-start gap-1.5 text-blue-300">
                                           <span className="w-2 h-2 rounded-full bg-blue-400 mt-1 flex-shrink-0"></span>
                                           <div>
-                                                <div className="font-semibold text-white line-clamp-1">{hoveredData.tourTitle}</div>
-                                                <div className="text-[10px] text-blue-200">Created date: {hoveredData.tourDate}</div>
+                                                <div className="font-semibold text-white line-clamp-1">{hoveredData.tripTitle}</div>
+                                                <div className="text-[10px] text-blue-200">Created date: {hoveredData.tripDate}</div>
                                           </div>
                                     </div>
 

@@ -6,7 +6,10 @@ import Loading from '../components/Loading';
 
 const fmtN = (n) => n >= 1000 ? `${(n / 1000).toFixed(1)}k` : n;
 
-export default function DashboardHome({ tours, photos, loading, openCreateTour, openEditTour }) {
+export default function DashboardHome({ trips = [], photos, loading, openCreateTrip, openEditTrip }) {
+      const handleCreate = openCreateTrip;
+      const handleEdit = openEditTrip;
+
       if (loading) {
             return <Loading message="Loading dashboard..." />;
       }
@@ -17,9 +20,9 @@ export default function DashboardHome({ tours, photos, loading, openCreateTour, 
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full">
                               <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm hover:shadow-md transition-all flex items-center justify-between">
                                     <div className="space-y-2">
-                                          <h1 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Tours</h1>
-                                          <div className="text-3xl font-extrabold text-slate-900">{fmtN(tours.length)}</div>
-                                          <p className="text-xs text-slate-400 font-medium">Active tour packages</p>
+                                          <h1 className="text-xs font-semibold uppercase tracking-wider text-slate-500">Total Trips</h1>
+                                          <div className="text-3xl font-extrabold text-slate-900">{fmtN(trips.length)}</div>
+                                          <p className="text-xs text-slate-400 font-medium">Active trip packages</p>
                                     </div>
                                     <div className="w-14 h-14 rounded-2xl bg-blue-50 text-amber-600 flex items-center justify-center shadow-sm">
                                           <Package size={26} />
@@ -42,12 +45,12 @@ export default function DashboardHome({ tours, photos, loading, openCreateTour, 
                               <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-4 border-b border-slate-100 gap-4 mb-4">
                                     <div>
                                           <h1 className="text-xl font-extrabold text-slate-900">Overview</h1>
-                                          <p className="text-xs text-slate-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel, molestias.</p>
+                                          <p className="text-xs text-slate-500">Track trip and photo statistics over time.</p>
                                     </div>
                                     <div className="flex items-center gap-3 text-xs font-semibold">
                                           <div className="flex items-center gap-2 bg-amber-50 text-amber-600 px-3.5 py-1.5 rounded-full border border-amber-100">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
-                                                <h1>Tours Created ({tours.length})</h1>
+                                                <h1>Trips Created ({trips.length})</h1>
                                           </div>
                                           <div className="flex items-center gap-2 bg-orange-50 text-orange-600 px-3.5 py-1.5 rounded-full border border-orange-100">
                                                 <span className="w-2.5 h-2.5 rounded-full bg-orange-500 inline-block"></span>
@@ -57,22 +60,22 @@ export default function DashboardHome({ tours, photos, loading, openCreateTour, 
                               </div>
 
                               <div className="h-60 w-full relative pt-2">
-                                    <AreaChart tours={tours} photos={photos} />
+                                    <AreaChart trips={trips} photos={photos} />
                               </div>
                         </div>
 
                         <div className="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-sm w-full space-y-5">
                               <div className="flex items-center justify-between pb-2">
                                     <div>
-                                          <h1 className="text-lg font-bold text-slate-900">Travel Packages</h1>
-                                          <p className="text-xs text-slate-500">Lorem ipsum dolor sit.</p>
+                                          <h1 className="text-lg font-bold text-slate-900">Travel Trip Packages</h1>
+                                          <p className="text-xs text-slate-500">Manage recent trip packages.</p>
                                     </div>
                                     <div className="flex items-center gap-3">
                                           <button
-                                                onClick={openCreateTour}
+                                                onClick={handleCreate}
                                                 className="inline-flex items-center gap-1.5 text-xs tracking-wider hover:tracking-widest transition-all duration-300 bg-gradient-to-tr from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-semibold px-4 py-2 rounded-2xl shadow-sm transition-all"
                                           >
-                                                <Plus size={14} /> Add Package
+                                                <Plus size={14} /> Add Trip
                                           </button>
                                           <Link
                                                 to="/packages"
@@ -84,14 +87,14 @@ export default function DashboardHome({ tours, photos, loading, openCreateTour, 
                                     </div>
                               </div>
 
-                              {tours.length === 0 ? (
-                                    <div className="text-slate-400 text-sm text-center py-8">No tours available.</div>
+                              {trips.length === 0 ? (
+                                    <div className="text-slate-400 text-sm text-center py-8">No trips available.</div>
                               ) : (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-                                          {tours.slice(0, 3).map(t => (
+                                          {trips.slice(0, 3).map(t => (
                                                 <div
                                                       key={t.id}
-                                                      onClick={() => openEditTour(t)}
+                                                      onClick={() => handleEdit(t)}
                                                       className="group relative h-44 rounded-2xl overflow-hidden cursor-pointer shadow-sm hover:shadow-lg transition-all border border-slate-200 bg-slate-900"
                                                 >
                                                       <img
