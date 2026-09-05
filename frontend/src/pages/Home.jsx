@@ -93,18 +93,18 @@ const Home = () => {
                               <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
                                     <div className="lg:col-span-7 space-y-8">
-                                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] sm:text-sm font-semibold tracking-wide shadow-xs">
+                                          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-50 border border-orange-200/80 text-orange-600 text-[11px] sm:text-sm font-semibold tracking-wide shadow-xs" data-aos="fade-right">
                                                 <span>The vacation you deserve is closer than you think</span>
                                                 <Heart className="w-4 h-4 fill-orange-500" />
                                           </div>
 
-                                          <h1 className="font-serif-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight">
+                                          <h1 className="font-serif-heading text-5xl sm:text-6xl lg:text-7xl font-extrabold text-slate-900 leading-[1.1] tracking-tight" data-aos="zoom-in">
                                                 Life is short <br />
                                                 and the world <Earth className="md:w-14 md:h-14 w-10 h-10 inline-block hover:rotate-12 transition-transform animate-bounce " /> <br />
                                                 is <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-500 via-amber-500 to-orange-600">Wide!</span> <TreePalm className="md:w-14 md:h-14 w-10 h-10 inline-block hover:rotate-12 transition-transform animate-bounce text-orange-500" />
                                           </h1>
 
-                                          <p className="text-slate-600 text-lg sm:text-xl max-w-xl font-normal leading-relaxed">
+                                          <p className="text-slate-600 text-lg sm:text-xl max-w-xl font-normal leading-relaxed" data-aos="fade-right">
                                                 Discover unforgettable adventures and unique trip packages crafted just for you.
                                           </p>
 
@@ -227,7 +227,7 @@ const Home = () => {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
 
-                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 transition-all duration-300 space-y-4">
+                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 transition-all duration-300 space-y-4" data-aos="fade-up">
                                     <div className="w-14 h-14 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center">
                                           <Globe className="w-7 h-7" />
                                     </div>
@@ -272,7 +272,7 @@ const Home = () => {
                   <section class="max-w-7xl w-full mx-auto py-8 lg:py-16 px-4 sm:px-6 lg:px-8">
                         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 items-start">
 
-                              <div class="space-y-3">
+                              <div class="space-y-3" data-aos="fade-right">
                                     <span class="text-xs font-extrabold uppercase tracking-widest text-amber-500">
                                           WHAT WE SERVE
                                     </span>
@@ -284,7 +284,7 @@ const Home = () => {
                                     </p>
                               </div>
 
-                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-10 transition-all duration-300 space-y-4 ">
+                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-10 transition-all duration-300 space-y-4" data-aos="fade-up">
                                     <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-500 flex items-center justify-center">
                                           <Compass className="w-7 h-7" />
                                     </div>
@@ -294,7 +294,7 @@ const Home = () => {
                                     </p>
                               </div>
 
-                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-14 transition-all duration-300 space-y-4">
+                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-14 transition-all duration-300 space-y-4" data-aos="fade-up">
                                     <div className="w-14 h-14 rounded-2xl bg-amber-100 text-orange-500 flex items-center justify-center">
                                           <Briefcase className="w-7 h-7" />
                                     </div>
@@ -304,7 +304,7 @@ const Home = () => {
                                     </p>
                               </div>
 
-                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-12 transition-all duration-300 space-y-4">
+                              <div className="bg-white p-8 rounded-3xl border border-stone-200/80 soft-shadow hover:-translate-y-2 hover:border-amber-500 lg:mt-12 transition-all duration-300 space-y-4" data-aos="fade-up">
                                     <div className="w-14 h-14 rounded-2xl bg-amber-100 text-amber-500 flex items-center justify-center">
                                           <HeartHandshake className="w-7 h-7" />
                                     </div>
@@ -316,9 +316,9 @@ const Home = () => {
                         </div>
                   </section>
 
-                  {/* Featured Trips Section */}
+                  {/* trips */}
                   <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
+                        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6" data-aos="fade-right">
                               <div className="space-y-3 max-w-xl">
                                     <span className="flex items-end gap-2 text-orange-500 text-xs font-extrabold uppercase tracking-widest">Top Destinations <Motorbike className="text-amber-600 w-4 h-4 inline-block hover:rotate-12 transition-transform" /></span>
                                     <h2 className="font-serif-heading text-4xl sm:text-5xl font-bold text-slate-900">
@@ -347,9 +347,9 @@ const Home = () => {
                         )}
                   </section>
 
-                  {/* Photo Section */}
+                  {/* photo */}
                   <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-                        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6">
+                        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-6" data-aos="fade-right">
                               <div className="space-y-3">
                                     <span className="text-orange-500 text-xs font-extrabold uppercase tracking-widest flex items-end gap-2">Travel Gallery <Camera className="w-4 h-4 inline-block hover:rotate-12 transition-transform" /></span>
                                     <h2 className="font-serif-heading text-4xl sm:text-5xl font-bold text-slate-900">

@@ -7,8 +7,11 @@ const PhotoGrid = ({ photos, onPhotoClick }) => {
                         <div
                               key={photo.id || index}
                               onClick={() => onPhotoClick(photo, index)}
-                              className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-200"
+                              className="group relative h-80 rounded-3xl overflow-hidden cursor-pointer shadow-sm hover:shadow-xl transition-all duration-500 bg-stone-200" data-aos="fade-up"
                         >
+
+                              <div className="absolute w-full h-full inset-0 bg-black/40 z-10 lg:hidden block"></div>
+
                               <img
                                     src={photo.imageUrl}
                                     alt={photo.title || 'Travel gallery image'}
@@ -22,7 +25,28 @@ const PhotoGrid = ({ photos, onPhotoClick }) => {
                                     <Maximize2 className="w-4 h-4" />
                               </div>
 
-                              <div className="absolute bottom-6 left-6 right-6 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 space-y-1">
+                              <div className="absolute bottom-6 left-6 right-6 text-white transform translate-y-4 space-y-1 z-10 lg:hidden">
+                                    {photo.title && (
+                                          <h4 className="font-serif-heading text-lg font-bold leading-tight">{photo.title}</h4>
+                                    )}
+                                    <div className="flex items-center flex-wrap gap-2 text-xs font-medium text-orange-300">
+                                          {photo.location && (
+                                                <p className="flex items-center gap-1">
+                                                      <MapPin className="w-3.5 h-3.5" />
+                                                      <span>{photo.location}</span>
+                                                </p>
+                                          )}
+                                          {photo.date && (
+                                                <p className="flex items-center gap-1 text-slate-300">
+                                                      <Calendar className="w-3.5 h-3.5 text-orange-400" />
+                                                      <span>{photo.date}</span>
+                                                </p>
+                                          )}
+                                    </div>
+
+                              </div>
+
+                              <div className="hidden lg:block absolute bottom-6 left-6 right-6 text-white transform translate-y-4 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition-all duration-300 space-y-1">
                                     {photo.title && (
                                           <h4 className="font-serif-heading text-lg font-bold leading-tight">{photo.title}</h4>
                                     )}

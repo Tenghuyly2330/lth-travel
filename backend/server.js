@@ -20,7 +20,6 @@ app.use('/api/photos', photoRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/upload', uploadRoutes);
 
-// Health check endpoint
 app.get('/api/health', (req, res) => {
       res.json({ status: 'ok', message: 'Personal Travel API is running smoothly' });
 });
@@ -32,5 +31,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, '0.0.0.0', () => {
-      console.log(`🚀 Travel API Server running on port ${PORT}`);
+      console.log(`API Server running on port ${PORT}`);
 });

@@ -5,8 +5,19 @@ import Home from './pages/Home';
 import Trips from './pages/Trips';
 import TripDetails from './pages/TripDetails';
 import Photos from './pages/Photos';
+import AOS from 'aos';
+import { useEffect } from 'react';
+
 
 function App() {
+
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,
+      once: false
+    });
+  }, []);
+
   return (
     <Router>
       <div className="min-h-screen flex flex-col justify-between bg-stone-50 text-slate-900 selection:bg-orange-500 selection:text-white">

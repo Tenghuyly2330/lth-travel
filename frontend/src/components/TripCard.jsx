@@ -7,7 +7,7 @@ const TripCard = ({ trip }) => {
       const { id, slug, title, location, country, duration, members, date, coverImage, description } = trip;
 
       return (
-            <div className="group bg-white rounded-3xl overflow-hidden border border-stone-200/80 soft-shadow hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1">
+            <div className="group bg-white rounded-3xl overflow-hidden border border-stone-200/80 soft-shadow hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1" data-aos="fade-up">
                   <div className="relative h-64 overflow-hidden bg-stone-100">
                         <img
                               src={coverImage}
